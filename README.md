@@ -4,23 +4,22 @@ O Projeto Arquitetural do TCC é composto das seguintes partes:
 1. Apresentação.
 2. Especificação da Solução.
 3. Modelagem Arquitetural.
-4. Prova de Conceito (POC) / protótipo
-arquitetural.
+4. Prova de Conceito (POC) / Protótipo Arquitetural.
 5. Avaliação da Arquitetura.
 6. Conclusão.
 Referências, Apêndices
 
 
 ## Apresentação
-Este é um item que contextualiza o trabalho, mostrando sua importância e objetivos.
-O Objetivo geral deve ser descrito de forma clara e completa, iniciando a frase assim: “O objetivo deste
+Este é um item que contextualiza o trabalho, mostrando a sua importância e objetivos.
+O objetivo deve ser descrito de forma clara e completa, iniciando a frase assim: “O objetivo deste
 trabalho é…”
 
 Os objetivos específicos (mínimo de 3) devem representar objetivos parciais a serem atingidos no projeto, tais como: 
 desenvolver um estudo de tecnologias, fazer a escolha de tecnologias, etc.
 
 Nesta seção do trabalho, descrever também o problema que originou o trabalho (que pode ser encontrado na 
-especificação e/ou no contexto abordado no trabalho. Um problema é uma situação que deve ser solucionada.
+especificação e/ou no contexto abordado no trabalho). Um problema é uma situação que deve ser solucionada.
 Após descrever o problema apresente as siglas, abreviaturas e definições utilizadas no trabalho.
 
 ## Especificação da solução
