@@ -1,5 +1,5 @@
 {
-  "name": "example-source-connector",
+  "name": "connector-source",
   "config": {
       "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
       "plugin.name": "pgoutput",
@@ -8,7 +8,7 @@
       "database.port": "5432",
       "database.user": "postgres",
       "database.password": "root",
-      "database.dbname" : "tcc",
+      "database.dbname" : "transportadora",
       "database.server.name": "dbserver1",
       "schema.whitelist": "public"
       }
