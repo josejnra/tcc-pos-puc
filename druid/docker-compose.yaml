@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
 
-  postgres:
+  druid-postgres:
     container_name: postgres
     image: postgres:latest
     environment:
@@ -11,7 +11,7 @@ services:
       - POSTGRES_DB=druid
 
   # Need 3.5 or later for container nodes
-  zookeeper:
+  druid-zookeeper:
     container_name: zookeeper
     image: zookeeper:3.7.0
     ports:
@@ -19,12 +19,12 @@ services:
     environment:
       - ZOO_MY_ID=1
 
-  coordinator:
+  druid-coordinator:
     image: apache/druid:0.22.1
     container_name: coordinator
     depends_on:
-      - zookeeper
-      - postgres
+      - druid-zookeeper
+      - druid-postgres
     ports:
       - "8081:8081"
     command:
@@ -32,13 +32,13 @@ services:
     env_file:
       - environment
 
-  broker:
+  druid-broker:
     image: apache/druid:0.22.1
     container_name: broker
     depends_on:
-      - zookeeper
-      - postgres
-      - coordinator
+      - druid-zookeeper
+      - druid-postgres
+      - druid-coordinator
     ports:
       - "8082:8082"
     command:
@@ -46,13 +46,13 @@ services:
     env_file:
       - environment
 
-  historical:
+  druid-historical:
     image: apache/druid:0.22.1
     container_name: historical
     depends_on:
-      - zookeeper
-      - postgres
-      - coordinator
+      - druid-zookeeper
+      - druid-postgres
+      - druid-coordinator
     ports:
       - "8083:8083"
     command:
@@ -60,13 +60,13 @@ services:
     env_file:
       - environment
 
-  middlemanager:
+  druid-middlemanager:
     image: apache/druid:0.22.1
     container_name: middlemanager
     depends_on:
-      - zookeeper
-      - postgres
-      - coordinator
+      - druid-zookeeper
+      - druid-postgres
+      - druid-coordinator
     ports:
       - "8091:8091"
       - "8100-8105:8100-8105"
@@ -75,13 +75,13 @@ services:
     env_file:
       - environment
 
-  router:
+  druid-router:
     image: apache/druid:0.22.1
     container_name: router
     depends_on:
-      - zookeeper
-      - postgres
-      - coordinator
+      - druid-zookeeper
+      - druid-postgres
+      - druid-coordinator
     ports:
       - "8888:8888"
     command:
