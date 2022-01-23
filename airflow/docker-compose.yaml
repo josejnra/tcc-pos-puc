@@ -1,0 +1,85 @@
+version: "3.7"
+
+x-dags-and-logs: &dags-and-logs
+  - ./dags:/opt/airflow/dags
+
+x-airflow-env: &airflow-env
+  - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
+  - AIRFLOW__WEBSERVER__BASE_URL=http://localhost
+  - AIRFLOW__WEBSERVER__DAG_DEFAULT_VIEW=graph
+  - AIRFLOW__WEBSERVER__SECRET_KEY=c22f739e0fb067f6398d3a5942a0c141dd325a4b37c63942ce30942a0513
+  - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
+  - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=True
+  - AIRFLOW__CORE__LOAD_EXAMPLES=False
+  - AIRFLOW__CORE__SQL_ALCHEMY_CONN=mysql://airflow:airflow@mysqldb:3306/airflow
+  - AIRFLOW__CORE__FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
+  - AIRFLOW__CELERY__BROKER_URL=redis://@redis:6379/0
+  - AIRFLOW__CELERY__RESULT_BACKEND=db+mysql://airflow:airflow@mysqldb:3306/airflow
+  - AIRFLOW__CLI__ENDPOINT_URL=http://localhost
+
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.2.3-python3.9
+  build:
+    context: .
+    dockerfile: Dockerfile
+  environment:
+    *airflow-env
+  volumes:
+    *dags-and-logs
+  user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"
+  depends_on:
+    - redis
+    - mysqldb
+  restart: on-failure
+
+
+services:
+
+  mysqldb:
+    image: mysql:8.0.27
+    container_name: airflow-mysql-db
+    command: --explicit_defaults_for_timestamp
+    environment:
+      MYSQL_ROOT_PASSWORD: "airflow"
+      MYSQL_DATABASE: "airflow"
+      MYSQL_USER: "airflow"
+      MYSQL_PASSWORD: "airflow"
+
+  redis:
+    image: redis:6.2.6
+    container_name: airflow-redis
+
+  webserver:
+    <<: *airflow-common
+    container_name: airflow-webserver
+    ports:
+      - 80:8080
+    command: webserver
+
+  scheduler:
+    <<: *airflow-common
+    container_name: airflow-scheduler
+    command: scheduler
+
+  worker:
+    <<: *airflow-common
+    container_name: airflow-worker
+    command: celery worker
+
+  db_upgrade:
+    <<: *airflow-common
+    container_name: airflow-db-upgrade
+    command: db upgrade
+
+  initdb:
+    <<: *airflow-common
+    container_name: airflow-initdb
+    entrypoint: /bin/bash
+    user: "50000:50000"
+    command:
+      - -c
+      - |
+        airflow db init
+        airflow users create --firstname Admin --lastname Admin --email admin --password admin --username admin --role Admin
+    depends_on:
+      - mysqldb
