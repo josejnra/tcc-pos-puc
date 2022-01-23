@@ -13,7 +13,7 @@ CREATE TABLE clientes (
 
 CREATE TABLE pedidos (
   id SERIAL PRIMARY KEY,
-  data_criacao DATE,
+  data_criacao TIMESTAMPTZ,
   id_cliente NUMERIC
 );
 
