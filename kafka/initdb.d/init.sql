@@ -48,5 +48,5 @@ VALUES
   ('Em transito', 2),
   ('Em processamento', 3),
   ('Em transito', 1),
-  ('Em transito', 4),
+  ('Entregue', 4),
   ('Em transito', 5);

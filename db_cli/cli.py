@@ -1,11 +1,11 @@
 import click
 
-from constantes import CONTEXT_SETTINGS
+from clientes import clientes
 from entregas import entregas
 from pedidos import pedidos
 
 
-@click.group(context_settings=CONTEXT_SETTINGS)
+@click.group(context_settings=dict(help_option_names=['-h', '--help']))
 def cli():
     """
         Script utilizado para gerar dados mock no banco de dados.
@@ -14,7 +14,4 @@ def cli():
 
 cli.add_command(pedidos)
 cli.add_command(entregas)
-
-
-if __name__ == '__main__':
-    cli()
+cli.add_command(clientes)
