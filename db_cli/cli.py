@@ -1,8 +1,8 @@
 import click
 
-from clientes import clientes
-from entregas import entregas
-from pedidos import pedidos
+from comandos.clientes import clientes
+from comandos.entregas import entregas
+from comandos.pedidos import pedidos
 
 
 @click.group(context_settings=dict(help_option_names=['-h', '--help']))

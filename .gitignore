@@ -1,3 +1,5 @@
 .idea
 
 airflow/logs
+
+*.pyc
