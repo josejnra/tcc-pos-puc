@@ -16,8 +16,8 @@ def entregas():
 
 
 @entregas.command()
-@click.option("--count", "-c", default=5, help="Numero de entregas a serem registradas. Default = 5.")
-@click.option("--max_id_pedido", "-m", default=5, help="Id máximo do pedido para geração das entregas. Default = 5.")
+@click.option("--count", "-c", default=5, help="Numero de entregas a serem registradas.", show_default=True)
+@click.option("--max_id_pedido", "-m", default=5, help="Id máximo do pedido para geração das entregas.", show_default=True)
 @click.pass_context
 def inserir(ctx, count: int, max_id_pedido: int):
     """

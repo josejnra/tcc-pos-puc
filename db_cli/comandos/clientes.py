@@ -16,7 +16,7 @@ def clientes():
 
 
 @clientes.command()
-@click.option("--count", "-c", default=5, help="Numero de clientes a serem inseridos. Default = 5.")
+@click.option("--count", "-c", default=5, help="Numero de clientes a serem inseridos.", show_default=True)
 @click.pass_context
 def inserir(ctx, count: int):
     """

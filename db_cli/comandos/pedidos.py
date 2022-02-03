@@ -17,8 +17,8 @@ def pedidos():
 
 
 @pedidos.command()
-@click.option("--count", "-c", default=5, help="Numero de pedidos a serem inseridos. Default = 5.")
-@click.option("--max_id_cliente", "-m", default=5, help="Id máximo do cliente para geração dos pedidos. Default = 5.")
+@click.option("--count", "-c", default=5, help="Numero de pedidos a serem inseridos.", show_default=True)
+@click.option("--max_id_cliente", "-m", default=5, help="Id máximo do cliente para geração dos pedidos.", show_default=True)
 @click.pass_context
 def inserir(ctx, count: int, max_id_cliente: int):
     """
