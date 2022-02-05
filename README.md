@@ -10,3 +10,6 @@ uma arquitetura desacoplada, com baixo custo e fácil integração. Não somente
 presentes na arquitetura proposta são de código aberto. Por fim, foi desenvolvido uma POC para poder realizar 
 a validação de alguns requisitos funcionais e não funcionais em cima de 3 casos de uso. Todos testes feitos foram 
 descritos para compravar a viabilidade de tal proposta.
+
+
+Dentro dos diretórios [kafka](kafka) e [airflow](airflow) poderá ser encontrado as informações necessários para execução dos serviços.
