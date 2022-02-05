@@ -3,19 +3,17 @@ import os
 import sys
 import time
 
-from airflow.operators.python import PythonOperator
-
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
-
+from airflow.operators.python import PythonOperator
 from airflow_utils import set_dag_id
 
 
 args = {
     'owner': 'time-de-desenvolvimento',
-    'description': 'Erro na execução da DAG de fluxo de clientes.',
+    'description': 'Pipeline de execução da DAG de fluxo de clientes.',
     'start_date': datetime(2022, 1, 1),
     'email': ['fulano.beltrano@email.com'],
     'email_on_failure': True
