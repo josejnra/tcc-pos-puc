@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import sys
 import time
@@ -8,15 +9,23 @@ sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
-from airflow.utils.dates import days_ago
 
 from airflow_utils import set_dag_id
 
 
+args = {
+    'owner': 'time-de-desenvolvimento',
+    'description': 'Erro na execução da DAG de fluxo de clientes.',
+    'start_date': datetime(2022, 1, 1),
+    'email': ['fulano.beltrano@email.com'],
+    'email_on_failure': True
+}
+
+
 with DAG(dag_id=set_dag_id(__file__),
          schedule_interval="@daily",
-         start_date=days_ago(1),
-         max_active_tasks=1) as dag:
+         max_active_tasks=1,
+         default_args=args) as dag:
 
     start = DummyOperator(task_id='start')
 

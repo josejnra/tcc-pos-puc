@@ -8,7 +8,12 @@ Para gerar registros no banco de dados pode-se utilizar o CLI. Para isto, basta 
 ```shell
 python db_cli
 ```
-Com o comando acima será apresentado todos os comandos disponíveis no CLI.
+Ou então, dentro do diretório do [db_cli](.) executar o seguinte comando:
+```shell
+python __main__.py
+```
+
+Desta forma, será apresentado todos os comandos disponíveis no CLI.
 
 ### Inserir novos clientes
 ```shell
