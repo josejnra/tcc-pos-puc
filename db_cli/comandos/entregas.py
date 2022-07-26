@@ -1,9 +1,9 @@
-from typing import List
+from typing import Iterator
 import click
 import random
 
-import psycopg2
 from prettytable import PrettyTable
+import psycopg2
 
 from config import DBHOST, DBNAME, DBUSER, DBPASSWD
 
@@ -64,14 +64,10 @@ def listar():
             click.echo(table)
 
 
-def gerar_entregas(count: int, max_id_pedido: int) -> List[tuple]:
-    entrega_lista = []
-
+def gerar_entregas(count: int, max_id_pedido: int) -> Iterator[tuple]:
     for _ in range(count):
         status = random.choice(
             ["Em transito", "Em processamento", "Entregue", "Aguardando retirada", "A entrega não pode ser efetuada"]
         )
         id_pedido = random.randint(1, max_id_pedido)
-        entrega_lista.append((status, id_pedido))
-
-    return entrega_lista
+        yield (status, id_pedido)

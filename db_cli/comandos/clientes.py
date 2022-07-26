@@ -1,11 +1,13 @@
-from typing import List
+from typing import Iterator
+
 import click
 import psycopg2
+from prettytable import PrettyTable
+
 from config import DBHOST
 from config import DBNAME
 from config import DBPASSWD
 from config import DBUSER
-from prettytable import PrettyTable
 from utils import gerar_cidade
 from utils import gerar_data
 from utils import gerar_endereco
@@ -70,15 +72,11 @@ def listar():
             click.echo(table)
 
 
-def gerar_clientes(count: int) -> List[tuple]:
-    cliente_lista = []
-
+def gerar_clientes(count: int) -> Iterator[tuple]:
     for _ in range(count):
         nome = gerar_nome_client()
         endereco = gerar_endereco()
         cidade = gerar_cidade()
         estado = gerar_estado_sigla()
         data_criacao = gerar_data()
-        cliente_lista.append((nome, endereco, cidade, estado, data_criacao))
-
-    return cliente_lista
+        yield (nome, endereco, cidade, estado, data_criacao)

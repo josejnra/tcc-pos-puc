@@ -1,12 +1,14 @@
 import random
-from typing import List
+from typing import Iterator
+
+from prettytable import PrettyTable
 import click
 import psycopg2
+
 from config import DBHOST
 from config import DBNAME
 from config import DBPASSWD
 from config import DBUSER
-from prettytable import PrettyTable
 from utils import gerar_data
 
 
@@ -66,11 +68,8 @@ def listar():
             click.echo(table)
 
 
-def gerar_pedidos(num_pedidos: int, max_id_cliente: int) -> List[tuple]:
-    pedido_lista = []
+def gerar_pedidos(num_pedidos: int, max_id_cliente: int) -> Iterator[tuple]:
     for _ in range(num_pedidos):
         data_pedido = gerar_data()
         id_cliente = random.randint(1, max_id_cliente)
-        pedido_lista.append((data_pedido, id_cliente))
-
-    return pedido_lista
+        yield (data_pedido, id_cliente)
