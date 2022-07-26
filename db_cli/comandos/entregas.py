@@ -23,10 +23,12 @@ def inserir(ctx, count: int, max_id_pedido: int):
     """
         Inserir dados mock na tabela de entregas.
     """
-    with psycopg2.connect(host=DBHOST,
-                          dbname=DBNAME,
-                          user=DBUSER,
-                          password=DBPASSWD) as conn:
+    with psycopg2.connect(
+        host=DBHOST,
+        dbname=DBNAME,
+        user=DBUSER,
+        password=DBPASSWD,
+    ) as conn:
 
         with conn.cursor() as cursor:
             cursor.executemany("INSERT INTO entregas (status, id_pedido) "
@@ -43,10 +45,12 @@ def listar():
     """
         Listar dados mock da tabela de entregas.
     """
-    with psycopg2.connect(host=DBHOST,
-                          dbname=DBNAME,
-                          user=DBUSER,
-                          password=DBPASSWD) as conn:
+    with psycopg2.connect(
+        host=DBHOST,
+        dbname=DBNAME,
+        user=DBUSER,
+        password=DBPASSWD,
+    ) as conn:
 
         with conn.cursor() as cursor:
             cursor.execute("SELECT * FROM entregas")

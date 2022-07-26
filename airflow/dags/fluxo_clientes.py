@@ -3,7 +3,7 @@ import os
 import sys
 import time
 
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))  # noqa: E402
 
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
@@ -14,16 +14,19 @@ from airflow_utils import set_dag_id
 args = {
     'owner': 'time-de-desenvolvimento',
     'description': 'Pipeline de execução da DAG de fluxo de clientes.',
-    'start_date': datetime(2022, 1, 1),
+    'start_date': datetime(2022, 3, 16),
+    'end_date': datetime(2022, 3, 17),
     'email': ['fulano.beltrano@email.com'],
-    'email_on_failure': True
+    'email_on_failure': True,
 }
 
 
-with DAG(dag_id=set_dag_id(__file__),
-         schedule_interval="@daily",
-         max_active_tasks=1,
-         default_args=args) as dag:
+with DAG(
+    dag_id=set_dag_id(__file__),
+    schedule_interval='@daily',
+    max_active_tasks=1,
+    default_args=args,
+) as dag:
 
     start = DummyOperator(task_id='start')
 

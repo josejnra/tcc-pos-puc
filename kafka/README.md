@@ -1,12 +1,12 @@
 ## Requisitos
-Para poder executar este projeto deve-se ter instalado o [docker](https://www.docker.com/) e o 
+Para poder executar este projeto deve-se ter instalado o [docker](https://www.docker.com/) e o
 [docker-compose](https://docs.docker.com/compose/).
 
 ## Executando
 
 Para executar o kafka e os demais serviços, basta rodar o seguinte comando:
 ```bash
-docker-compose up -d 
+docker-compose up -d
 ```
 
 Após isto, estará disponível os seguintes serviços:
@@ -17,10 +17,10 @@ Após isto, estará disponível os seguintes serviços:
 - minio, interface web acessível em  [http://localhost:9000](http://localhost:8080). Credenciais disponíveis no [docker-compose.yaml](docker-compose.yaml).
 
 ### Conector Source
-Após executar o `docker-compose`, deve-se criar o conector source, que irá buscar registros no banco de dados e 
+Após executar o `docker-compose`, deve-se criar o conector source, que irá buscar registros no banco de dados e
 enviar para os tópicos kafka, com o seguinte comando abaixo:
 ```bash
-curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @connect-source.json 
+curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @connect-source.json
 ```
 
 ### Conector Sink
@@ -28,7 +28,7 @@ curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json"
 
 Após isto, execute o comando abaixo para poder criar o agente responsável pela escrita no bucket:
 ```bash
-curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @connect-sink.json 
+curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @connect-sink.json
 ```
 
 

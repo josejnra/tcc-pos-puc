@@ -1,7 +1,7 @@
 ## DB CLI
 > Para poder utilizar este CLI deve-se ter instalado todas dependências listas no [pyproject.toml](../pyproject.toml).
 > Ou então instalar os pacotes disponíveis no [requirements.txt](../requirements.txt), caso não tenha o poetry instalado.
-> 
+>
 > Além disto, deve-se executar o [docker-compose.yaml](../kafka/docker-compose.yaml), que se encontra no diretório [kafka](../kafka).
 
 Para gerar registros no banco de dados pode-se utilizar o CLI. Para isto, basta estar na raíz do [projeto](../) e executar os seguintes comandos:

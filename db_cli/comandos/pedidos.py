@@ -1,11 +1,12 @@
 import random
 from typing import List
 import click
-
 import psycopg2
+from config import DBHOST
+from config import DBNAME
+from config import DBPASSWD
+from config import DBUSER
 from prettytable import PrettyTable
-
-from config import DBHOST, DBNAME, DBUSER, DBPASSWD
 from utils import gerar_data
 
 
@@ -24,10 +25,12 @@ def inserir(ctx, count: int, max_id_cliente: int):
     """
         Inserir dados mock na tabela de pedidos.
     """
-    with psycopg2.connect(host=DBHOST,
-                          dbname=DBNAME,
-                          user=DBUSER,
-                          password=DBPASSWD) as conn:
+    with psycopg2.connect(
+        host=DBHOST,
+        dbname=DBNAME,
+        user=DBUSER,
+        password=DBPASSWD,
+    ) as conn:
 
         with conn.cursor() as cursor:
             cursor.executemany("INSERT INTO pedidos (data_criacao, id_cliente)"
@@ -44,10 +47,12 @@ def listar():
     """
         Listar dados da tabela de pedidos.
     """
-    with psycopg2.connect(host=DBHOST,
-                          dbname=DBNAME,
-                          user=DBUSER,
-                          password=DBPASSWD) as conn:
+    with psycopg2.connect(
+        host=DBHOST,
+        dbname=DBNAME,
+        user=DBUSER,
+        password=DBPASSWD,
+    ) as conn:
 
         with conn.cursor() as cursor:
             cursor.execute("SELECT * FROM pedidos")

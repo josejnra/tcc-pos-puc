@@ -1,5 +1,5 @@
 ## Requisitos
-Para poder executar este projeto deve-se ter instalado o [docker](https://www.docker.com/) e o 
+Para poder executar este projeto deve-se ter instalado o [docker](https://www.docker.com/) e o
 [docker-compose](https://docs.docker.com/compose/).
 
 ## Executando

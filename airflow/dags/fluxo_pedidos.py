@@ -2,21 +2,21 @@ import os
 import sys
 import time
 
-from airflow.operators.python import PythonOperator
-
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
-
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))  # noqa
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
+from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
 
 from airflow_utils import set_dag_id
 
 
-with DAG(dag_id=set_dag_id(__file__),
-         schedule_interval="@daily",
-         start_date=days_ago(1),
-         max_active_tasks=1) as dag:
+with DAG(
+    dag_id=set_dag_id(__file__),
+    schedule_interval='@daily',
+    start_date=days_ago(1),
+    max_active_tasks=1,
+) as dag:
 
     start = DummyOperator(task_id='start')
 

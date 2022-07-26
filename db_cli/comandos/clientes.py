@@ -1,11 +1,16 @@
 from typing import List
 import click
-
 import psycopg2
+from config import DBHOST
+from config import DBNAME
+from config import DBPASSWD
+from config import DBUSER
 from prettytable import PrettyTable
-
-from config import DBHOST, DBNAME, DBUSER, DBPASSWD
-from utils import gerar_endereco, gerar_cidade, gerar_nome_client, gerar_data, gerar_estado_sigla
+from utils import gerar_cidade
+from utils import gerar_data
+from utils import gerar_endereco
+from utils import gerar_estado_sigla
+from utils import gerar_nome_client
 
 
 @click.group()
@@ -22,14 +27,18 @@ def inserir(ctx, count: int):
     """
         Inserir dados mock na tabela de clientes.
     """
-    with psycopg2.connect(host=DBHOST,
-                          dbname=DBNAME,
-                          user=DBUSER,
-                          password=DBPASSWD) as conn:
+    with psycopg2.connect(
+        host=DBHOST,
+        dbname=DBNAME,
+        user=DBUSER,
+        password=DBPASSWD,
+    ) as conn:
 
         with conn.cursor() as cursor:
-            cursor.executemany("INSERT INTO clientes (nome, endereco, cidade, estado, data_criacao) "
-                               "VALUES (%s, %s, %s, %s, %s)", gerar_clientes(count))
+            cursor.executemany(
+                "INSERT INTO clientes (nome, endereco, cidade, estado, data_criacao) "
+                "VALUES (%s, %s, %s, %s, %s)", gerar_clientes(count),
+            )
 
             # Make the changes to the database persistent
             conn.commit()
@@ -42,10 +51,12 @@ def listar():
     """
         Listar dados da tabela de clientes.
     """
-    with psycopg2.connect(host=DBHOST,
-                          dbname=DBNAME,
-                          user=DBUSER,
-                          password=DBPASSWD) as conn:
+    with psycopg2.connect(
+        host=DBHOST,
+        dbname=DBNAME,
+        user=DBUSER,
+        password=DBPASSWD,
+    ) as conn:
 
         with conn.cursor() as cursor:
             cursor.execute("SELECT * FROM clientes")
