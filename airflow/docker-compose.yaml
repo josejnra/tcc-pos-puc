@@ -2,6 +2,7 @@ version: "3.7"
 
 x-dags-and-logs: &dags-and-logs
   - ./dags:/opt/airflow/dags
+  - ./logs:/opt/airflow/logs
 
 x-airflow-env: &airflow-env
   - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
@@ -18,7 +19,7 @@ x-airflow-env: &airflow-env
   - AIRFLOW__CLI__ENDPOINT_URL=http://localhost
 
 x-airflow-common: &airflow-common
-  image: apache/airflow:2.2.3-python3.9
+  image: apache/airflow:2.6.0-python3.9
   build:
     context: .
     dockerfile: Dockerfile

@@ -12,6 +12,15 @@ CREATE TABLE clientes (
   data_criacao TIMESTAMPTZ
 );
 
+CREATE TABLE solicitação_cliente (
+  id SERIAL PRIMARY KEY,
+  nome CHARACTER VARYING (255),
+  endereco CHARACTER VARYING (255),
+  cidade CHARACTER VARYING (255),
+  estado CHAR (2),
+  data_criacao TIMESTAMPTZ
+);
+
 CREATE TABLE pedidos (
   id SERIAL PRIMARY KEY,
   data_criacao TIMESTAMPTZ,
@@ -26,6 +35,14 @@ CREATE TABLE entregas (
 
 
 INSERT INTO clientes (nome, endereco, cidade, estado, data_criacao)
+VALUES
+  ('Pedro Augusto da Rocha',	'Rua Pedro Carlos Hoffman',	'Porto Alegre',	'RS', '2022-01-01 15:34:34'),
+  ('Antonio Carlos Mamel',	'Av. Pinheiros', 'Belo Horizonte',	'MG', '2022-01-03 17:12:00'),
+  ('Luiza Augusta Mhor',	'Rua Salto Grande',	'Niteroi',	'RJ', '2022-01-02 08:24:27'),
+  ('Jane Ester',	'Av 7 de setembro',	'Erechim',	'RS', '2022-01-02 06:51:16'),
+  ('Marcos Antônio dos Santos',	'Av Farrapos',	'Porto Alegre',	'RS', '2022-01-05 10:03:59');
+
+INSERT INTO solicitação_cliente (nome, endereco, cidade, estado, data_criacao)
 VALUES
   ('Pedro Augusto da Rocha',	'Rua Pedro Carlos Hoffman',	'Porto Alegre',	'RS', '2022-01-01 15:34:34'),
   ('Antonio Carlos Mamel',	'Av. Pinheiros', 'Belo Horizonte',	'MG', '2022-01-03 17:12:00'),
