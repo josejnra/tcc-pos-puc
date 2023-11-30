@@ -1,3 +1,5 @@
+#!/bin/bash
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
@@ -25,5 +27,7 @@ then
 fi
 
 npm install
-npm run generate-requirements
-npm run thaw
+
+poetry install
+
+git config --local core.editor "vi"
