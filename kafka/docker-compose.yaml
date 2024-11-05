@@ -1,4 +1,6 @@
-version: '3.7'
+networks: 
+  kafka:
+
 
 services:
 
@@ -11,6 +13,8 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - kafka
 
   kafka-broker1:
     image: confluentinc/cp-kafka:7.0.0
@@ -34,6 +38,8 @@ services:
       KAFKA_JMX_HOSTNAME: localhost
     depends_on:
       - zookeeper
+    networks:
+      - kafka
 
   kafka-broker2:
     image: confluentinc/cp-kafka:7.0.0
@@ -57,6 +63,8 @@ services:
       KAFKA_JMX_HOSTNAME: localhost
     depends_on:
       - zookeeper
+    networks:
+      - kafka
 
   schema-registry:
     image: confluentinc/cp-schema-registry:7.0.0
@@ -71,6 +79,8 @@ services:
     depends_on:
       - kafka-broker1
       - kafka-broker2
+    networks:
+      - kafka
 
   kafka-connect:
     image: confluentinc/cp-kafka-connect:7.0.0
@@ -106,11 +116,13 @@ services:
       - -c
       - |
         echo "Installing Connector"
-        confluent-hub install --no-prompt confluentinc/kafka-connect-s3:10.0.5
-        confluent-hub install --no-prompt debezium/debezium-connector-postgresql:1.7.1
+        confluent-hub install --no-prompt confluentinc/kafka-connect-s3:10.5.17
+        confluent-hub install --no-prompt debezium/debezium-connector-postgresql:2.5.4
         #
         echo "Launching Kafka Connect worker"
         /etc/confluent/docker/run
+    networks:
+      - kafka
 
   # commercial
   control-center:
@@ -132,6 +144,8 @@ services:
       - kafka-broker1
       - kafka-broker2
       - schema-registry
+    networks:
+      - kafka
 
   # sgbd
   postgres:
@@ -145,6 +159,8 @@ services:
     volumes:
       - ./initdb.d:/docker-entrypoint-initdb.d
     command: postgres -c log_min_error_statement=fatal -c wal_level=logical -c max_wal_senders=10 -c max_replication_slots=1
+    networks:
+      - kafka
 
   pgadmin:
     image: dpage/pgadmin4:6.4
@@ -154,6 +170,8 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
       - 8080:80
+    networks:
+      - kafka
 
   # simulate s3 storage
   minio:
@@ -162,6 +180,37 @@ services:
     ports:
       - 9000:9000
       - 9001:9001
+    environment:
+      MINIO_ROOT_USER: user
+      MINIO_ROOT_PASSWORD: password
     command: server /data --console-address ":9001"
+    networks:
+      - kafka
   # web ui access
   # minioadmin:minioadmin
+
+  minio-mc:
+    image: minio/mc
+    container_name: mc
+    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+    depends_on:
+      - minio
+    networks:
+      - kafka
+    entrypoint: >
+      /bin/sh -c "
+      echo "Waiting for minio service to startup...";
+      sleep 10;
+      /usr/bin/mc config host add myminio http://minio:9000 user password;
+      /usr/bin/mc admin user svcacct add           \
+      --access-key "myuserserviceaccount"          \
+      --secret-key "myuserserviceaccountpassword"  \
+      myminio user;
+      /usr/bin/mc mb --with-versioning myminio/lake-raw-zone;
+      exit 0;
+      "
+    # docker run -it --rm --entrypoint=/bin/sh --network=kafka_kafka minio/mc

@@ -1,13 +1,16 @@
 {
-      "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
-      "plugin.name": "pgoutput",
-      "tasks.max": "1",
-      "database.hostname": "postgres",
-      "database.port": "5432",
-      "database.user": "postgres",
-      "database.password": "root",
-      "database.dbname" : "transportadora",
-      "database.server.name": "dbserver1",
-      "schema.whitelist": "public",
-      "table.whitelist": "pedidos"
+  "name": "connector-source",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "plugin.name": "pgoutput",
+    "tasks.max": "1",
+    "database.hostname": "postgres",
+    "database.port": "5432",
+    "database.user": "postgres",
+    "database.password": "root",
+    "database.dbname" : "transportadora",
+    "topic.prefix": "carrier",
+    // "schema.whitelist": "public",
+    "table.include.list": "public.pedidos,public.clientes,public.entregas"
+  }
 }
